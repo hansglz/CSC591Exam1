@@ -21,3 +21,4 @@ ax.axis("off")
 plot_options = {"node_size": 10, "with_labels": False, "width": 0.15}
 nx.draw_networkx(G, pos=nx.random_layout(G), ax=ax, **plot_options)
 
+plt.show()

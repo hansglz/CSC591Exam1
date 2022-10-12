@@ -1,4 +1,4 @@
-import collections
+import collections, json, time
 
 import pandas as pd
 import numpy as np
@@ -73,4 +73,57 @@ def question_a():
         plt.savefig("image/" + key + "_linear-linear")
         plt.clf()
 
-question_a()
+def question_b():
+    for key in data:
+        print("Parsing data from: " + key)
+        g = nx.from_pandas_edgelist(data[key], "start_node", "end_node")
+
+        print("Start calculating eigen centrality for " + key + " dataset")
+        tic = time.perf_counter()
+        eigenCentrality = nx.eigenvector_centrality(g)
+        toc = time.perf_counter()
+        print(f"Calculate eigen centrality in {toc - tic:0.4f} seconds\n")
+
+        print("Start calculating page rank centrality for " + key + " dataset")
+        tic = time.perf_counter()
+        pageRankCentrality = nx.pagerank(g)
+        toc = time.perf_counter()
+        print(f"Calculate page rank centrality in {toc - tic:0.4f} seconds\n")
+
+        print("Start calculating betweenness centrality for " + key + " dataset")
+        tic = time.perf_counter()
+        # betweennessCentrality = nx.betweenness_centrality(g)
+        toc = time.perf_counter()
+        print(f"Calculate betweenness centrality in {toc - tic:0.4f} seconds\n")
+
+        print("Start calculating closeness centrality for " + key + " dataset")
+        tic = time.perf_counter()
+        closenessCentrality = nx.closeness_centrality(g)
+        toc = time.perf_counter()
+        print(f"Calculate closeness centrality in {toc - tic:0.4f} seconds\n")
+
+        sorted((v, f"{c:0.2f}") for v, c in eigenCentrality.items())
+        sorted((v, f"{c:0.2f}") for v, c in pageRankCentrality.items())
+        # sorted((v, f"{c:0.2f}") for v, c in betweennessCentrality.items())
+        sorted((v, f"{c:0.2f}") for v, c in closenessCentrality.items())
+
+        f = open("output/" + key + "_eigen_centrality.txt", "w")
+        f.write(json.dumps(eigenCentrality))
+        f.close()
+
+        f = open("output/" + key + "_page_rank_centrality.txt", "w")
+        f.write(json.dumps(pageRankCentrality))
+        f.close()
+
+        f = open("output/" + key + "_betweenness_centrality.txt",  "w")
+        # f.write(json.dumps(betweennessCentrality))
+        f.write('Hello world!')
+        f.close()
+
+        f = open("output/" + key + "_closeness_centrality.txt", "w")
+        f.write(json.dumps(closenessCentrality))
+        f.close()
+
+        print('------------------------------------------------\n')
+
+question_b()

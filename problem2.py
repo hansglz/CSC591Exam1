@@ -42,17 +42,17 @@ def solution():
     cur = []
     for i in range(n):
         cur.append(i+1)
+
     degree_sum = sum(degree_list)
+    weighted_avg = np.average(cur, weights=degree_list)
+
     degree_list_final = []
-    initsum = 0
     for i in range(n):
-        initsum += cur[i] * degree_list[i]
-    for i in range(n):
-        degree_list_final.append(initsum / degree_sum)
+        degree_list_final.append(weighted_avg)
     # degree_list_final = [d * v / degree_sum for d, v in (degree_list, cur)]
 
     dist_list = []
-    for i in range(1000000000):
+    for i in range(5000):
         dis = calDis(cur, degree_list_final)
         print(dis)
         dist_list.append(dis)

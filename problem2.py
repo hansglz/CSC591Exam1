@@ -1,4 +1,5 @@
 import collections, json, time
+from random import randrange
 
 import pandas as pd
 import numpy as np
@@ -18,38 +19,45 @@ facebook = pd.read_csv(
 )
 
 
-def calDis(degree_list, degree_list_final, n):
+def calDis(degree_list, degree_list_final):
     res = 0
     for i in range(len(degree_list)):
         res += abs(degree_list[i] - degree_list_final[i])
-    return res / n
+    return res / len(degree_list)
 
 
-def calDegreeList(g, cur, degree_list, n):
-    res = []
-    for node in range(n):
-        temp = 0
-        for neighbor in list(g.adj[node]):
-            temp += cur[neighbor]
-        res.append(temp/degree_list[node])
-    return res
+def calDegreeList(g, cur, degree_list):
+    node = randrange(len(degree_list))
+    temp = 0
+    for adj in list(g.adj[node]):
+        temp += cur[adj]
+    cur[node] = temp / degree_list[node]
 
 
 def solution():
     g = nx.from_pandas_edgelist(facebook, "start_node", "end_node")
     n, e = g.number_of_nodes(), g.number_of_edges()
     degree_list = [d for _, d in g.degree()]
-    cur = degree_list
+    # cur = degree_list
+    cur = []
+    for i in range(n):
+        cur.append(i+1)
     degree_sum = sum(degree_list)
-    degree_list_final = [d / degree_sum for d in degree_list]
+    degree_list_final = []
+    initsum = 0
+    for i in range(n):
+        initsum += cur[i] * degree_list[i]
+    for i in range(n):
+        degree_list_final.append(initsum / degree_sum)
+    # degree_list_final = [d * v / degree_sum for d, v in (degree_list, cur)]
 
     dist_list = []
-    for i in range(100):
-        print(i)
-        dist_list.append(calDis(cur, degree_list_final, n))
-        degree_list_new = calDegreeList(g, cur, degree_list, n)
-        cur = degree_list_new
+    for i in range(1000000000):
+        dis = calDis(cur, degree_list_final)
+        print(dis)
+        dist_list.append(dis)
+        calDegreeList(g, cur, degree_list)
 
-    print(dist_list)
+    # print(dist_list)
 
 solution()

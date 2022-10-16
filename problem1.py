@@ -41,12 +41,14 @@ def load_graph(data):
 
 def question_a():
     for key in data:
+
         deg, cs = load_graph(data[key])
+
         # plt.loglog(deg, cs, 'bo')
         plt.plot(deg, cs, 'bo')
         plt.xscale('log')
         plt.yscale('log')
-        plt.title("Cumulative Distribution plot log-log")
+        plt.title("CCDF of " + key + " dataset log-log")
         plt.ylabel("Sample with value > Degree")
         plt.xlabel("Degree")
         # plt.show()
@@ -56,7 +58,7 @@ def question_a():
         # plt.semilogy(deg, cs, 'bo')
         plt.plot(deg, cs, 'bo')
         plt.xscale('log')
-        plt.title("Cumulative Distribution plot semi-log")
+        plt.title("CCDF of " + key + " dataset semi-log")
         plt.ylabel("Sample with value > Degree")
         plt.xlabel("Degree")
         # plt.show()
@@ -66,7 +68,7 @@ def question_a():
         plt.plot(deg, cs, 'bo')
         plt.xscale('linear')
         plt.yscale('linear')
-        plt.title("Cumulative Distribution plot linear-linear")
+        plt.title("CCDF of " + key + " dataset linear-linear")
         plt.ylabel("Sample with value > Degree")
         plt.xlabel("Degree")
         # plt.show()
@@ -77,6 +79,8 @@ def question_b():
     for key in data:
         print("Parsing data from: " + key)
         g = nx.from_pandas_edgelist(data[key], "start_node", "end_node")
+        print("Total number of nodes in graph: " + str(g.number_of_nodes()))
+        print("Total number of edges in graph: " + str(g.number_of_edges()))
 
         print("Start calculating eigen centrality for " + key + " dataset")
         tic = time.perf_counter()
@@ -92,7 +96,7 @@ def question_b():
 
         print("Start calculating betweenness centrality for " + key + " dataset")
         tic = time.perf_counter()
-        # betweennessCentrality = nx.betweenness_centrality(g)
+        betweennessCentrality = nx.betweenness_centrality(g)
         toc = time.perf_counter()
         print(f"Calculate betweenness centrality in {toc - tic:0.4f} seconds\n")
 
@@ -104,7 +108,7 @@ def question_b():
 
         sorted((v, f"{c:0.2f}") for v, c in eigenCentrality.items())
         sorted((v, f"{c:0.2f}") for v, c in pageRankCentrality.items())
-        # sorted((v, f"{c:0.2f}") for v, c in betweennessCentrality.items())
+        sorted((v, f"{c:0.2f}") for v, c in betweennessCentrality.items())
         sorted((v, f"{c:0.2f}") for v, c in closenessCentrality.items())
 
         f = open("output/" + key + "_eigen_centrality.txt", "w")
@@ -116,8 +120,8 @@ def question_b():
         f.close()
 
         f = open("output/" + key + "_betweenness_centrality.txt",  "w")
-        # f.write(json.dumps(betweennessCentrality))
-        f.write('Hello world!')
+        f.write(json.dumps(betweennessCentrality))
+        # f.write('Hello world!')
         f.close()
 
         f = open("output/" + key + "_closeness_centrality.txt", "w")
@@ -126,4 +130,12 @@ def question_b():
 
         print('------------------------------------------------\n')
 
+def question_c():
+    for key in data:
+        g = nx.from_pandas_edgelist(data[key], "start_node", "end_node")
+        connectivity = nx.algebraic_connectivity(g)
+        print("For " + key + " dataset, the connectivity is: " + str(connectivity))
+
+# question_a()
 question_b()
+# question_c()

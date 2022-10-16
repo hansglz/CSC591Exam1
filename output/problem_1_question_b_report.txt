@@ -1,0 +1,54 @@
+/Users/zhanggaolin/.conda/envs/CSC591Exam1/bin/python /Users/zhanggaolin/PycharmProjects/CSC591Exam1/problem1.py 
+Parsing data from: facebook
+Total number of nodes in graph: 4039
+Total number of edges in graph: 88234
+Start calculating eigen centrality for facebook dataset
+Calculate eigen centrality in 1.6348 seconds
+
+Start calculating page rank centrality for facebook dataset
+Calculate page rank centrality in 0.4858 seconds
+
+Start calculating betweenness centrality for facebook dataset
+Calculate betweenness centrality in 157.5009 seconds
+
+Start calculating closeness centrality for facebook dataset
+Calculate closeness centrality in 43.7215 seconds
+
+------------------------------------------------
+
+Parsing data from: twitch
+Total number of nodes in graph: 7126
+Total number of edges in graph: 35324
+Start calculating eigen centrality for twitch dataset
+Calculate eigen centrality in 0.5546 seconds
+
+Start calculating page rank centrality for twitch dataset
+Calculate page rank centrality in 0.1185 seconds
+
+Start calculating betweenness centrality for twitch dataset
+Calculate betweenness centrality in 269.0038 seconds
+
+Start calculating closeness centrality for twitch dataset
+Calculate closeness centrality in 52.5901 seconds
+
+------------------------------------------------
+
+Parsing data from: github
+Total number of nodes in graph: 37700
+Total number of edges in graph: 289003
+Start calculating eigen centrality for github dataset
+Calculate eigen centrality in 3.4698 seconds
+
+Start calculating page rank centrality for github dataset
+Calculate page rank centrality in 0.6237 seconds
+
+Start calculating betweenness centrality for github dataset
+Calculate betweenness centrality in 10623.0790 seconds
+
+Start calculating closeness centrality for github dataset
+Calculate closeness centrality in 2105.1836 seconds
+
+------------------------------------------------
+
+
+Process finished with exit code 0

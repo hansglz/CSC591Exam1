@@ -27,6 +27,7 @@ def calDis(degree_list, degree_list_final):
 
 
 def calDegreeList(g, cur, degree_list):
+    # print("cur: " + str(cur))
     node = randrange(len(degree_list))
     temp = 0
     for adj in list(g.adj[node]):
@@ -52,7 +53,7 @@ def solution():
     # degree_list_final = [d * v / degree_sum for d, v in (degree_list, cur)]
 
     dist_list = []
-    for i in range(5000):
+    for i in range(100000):
         dis = calDis(cur, degree_list_final)
         print(dis)
         dist_list.append(dis)

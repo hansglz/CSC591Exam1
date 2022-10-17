@@ -1,4 +1,3 @@
-/Users/zhanggaolin/.conda/envs/CSC591Exam1/bin/python /Users/zhanggaolin/PycharmProjects/CSC591Exam1/problem1.py 
 Parsing data from: facebook
 Total number of nodes in graph: 4039
 Total number of edges in graph: 88234

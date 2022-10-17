@@ -111,6 +111,55 @@ def question_b():
         sorted((v, f"{c:0.2f}") for v, c in betweennessCentrality.items())
         sorted((v, f"{c:0.2f}") for v, c in closenessCentrality.items())
 
+        eigenCentralitySequence = sorted([c for v, c in eigenCentrality.items()], reverse=True)
+        pageRankCentralitySequence = sorted([c for v, c in pageRankCentrality.items()], reverse=True)
+        betweennessCentralitySequence = sorted([c for v, c in betweennessCentrality.items()], reverse=True)
+        closenessCentralitySequence = sorted([c for v, c in closenessCentrality.items()], reverse=True)
+
+        cen, cs = load_centrality(eigenCentralitySequence)
+        plt.plot(cen, cs, 'bo')
+        plt.xscale('log')
+        plt.yscale('log')
+        plt.title("Eigen Centrality Distribution Plot (" + key + ")")
+        plt.ylabel("Empirical CCDF")
+        plt.xlabel("Centrality")
+        # plt.show()
+        plt.savefig("image/" + key + "-eigen-centrality_log-log")
+        plt.clf()
+
+        cen, cs = load_centrality(pageRankCentralitySequence)
+        plt.plot(cen, cs, 'bo')
+        plt.xscale('log')
+        plt.yscale('log')
+        plt.title("PageRank Centrality Distribution Plot (" + key + ")")
+        plt.ylabel("Empirical CCDF")
+        plt.xlabel("Centrality")
+        # plt.show()
+        plt.savefig("image/" + key + "-pagerank-centrality-log-log")
+        plt.clf()
+
+        cen, cs = load_centrality(betweennessCentralitySequence)
+        plt.plot(cen, cs, 'bo')
+        plt.xscale('log')
+        plt.yscale('log')
+        plt.title("Betweenness Centrality Distribution Plot (" + key + ")")
+        plt.ylabel("Empirical CCDF")
+        plt.xlabel("Centrality")
+        # plt.show()
+        plt.savefig("image/" + key + "-betweenness-centrality-log-log")
+        plt.clf()
+
+        cen, cs = load_centrality(closenessCentralitySequence)
+        plt.plot(cen, cs, 'bo')
+        plt.xscale('log')
+        plt.yscale('log')
+        plt.title("Closeness Centrality Distribution Plot (" + key + ")")
+        plt.ylabel("Empirical CCDF")
+        plt.xlabel("Centrality")
+        # plt.show()
+        plt.savefig("image/" + key + "-closeness-centrality-log-log")
+        plt.clf()
+
         f = open("output/" + key + "_eigen_centrality.txt", "w")
         f.write(json.dumps(eigenCentrality))
         f.close()
@@ -130,12 +179,20 @@ def question_b():
 
         print('------------------------------------------------\n')
 
+
+def load_centrality(centrality_sequence):
+    centralityCount = collections.Counter(centrality_sequence)
+    cen, cnt = zip(*centralityCount.items())
+    cs = np.cumsum(cnt)
+    return cen, cs
+
 def question_c():
     for key in data:
         g = nx.from_pandas_edgelist(data[key], "start_node", "end_node")
         connectivity = nx.algebraic_connectivity(g)
         print("For " + key + " dataset, the connectivity is: " + str(connectivity))
 
-# question_a()
+question_a()
 question_b()
-# question_c()
+question_c()
+# test()
